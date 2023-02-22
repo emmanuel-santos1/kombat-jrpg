@@ -2,6 +2,9 @@ import json
 
 
 def test_create_user(client):
+    """
+    Check creation of user
+    """
     data = {
         "name": "name",
         "last_name": "lastname",

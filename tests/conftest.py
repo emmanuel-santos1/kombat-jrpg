@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from typing import Any
 from typing import Generator
 
@@ -92,7 +93,13 @@ def normal_user_token_headers(client: TestClient, db_session: Session):
     )
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(autouse=True)  # Avoid Throttling
+def slow_down_tests():
+    yield
+    time.sleep(1.5)
+
+
+@pytest.fixture(autouse=True)
 def create_default_characters(db_session: Session):
     c1 = get_or_create_character(db_session, "Tonyn", "Stallone")
     c2 = get_or_create_character(db_session, "Arnaldor", "Shuatseneguer")

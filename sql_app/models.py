@@ -1,8 +1,9 @@
+import re
+
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey
 from sqlalchemy import Integer
 from sqlalchemy import String
-from sqlalchemy.orm import relationship
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import validates
 from sqlalchemy.schema import CheckConstraint
@@ -40,15 +41,11 @@ class Superpower(Base):
     damage = Column(Integer)
     character = Column(Integer, ForeignKey("character.id"))
 
-    # __table_args__ = (
-    #     CheckConstraint('char_length(sequence) >= 3',
-    #                     name='sequence_min_length'),
-    #     CheckConstraint('char_length(sequence) <= 6',
-    #                     name='sequence_max_length'),
-    # )
-
     @validates("sequence")
     def validate_some_string(self, key, sequence) -> str:
+        pat = re.compile(r"[AWSD]{2,5}[KP]{1}")
+        if not re.fullmatch(pat, sequence):
+            raise ValueError("character in sequence not valid")
         if len(sequence) < 3:
             raise ValueError("sequence too short")
         if len(sequence) > 6:

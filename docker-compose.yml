@@ -35,7 +35,7 @@ services:
   app:
     build:
       context: ./
-      target: release
+      target: test
     image: kombat-jrpg
     restart: on-failure
     ports:

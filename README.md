@@ -33,7 +33,7 @@ Go to doc for more information
 
 ## How to run tests ?
 ```
-pytest
+docker-compose run app test
 ```
 
 ## How to create new user ?

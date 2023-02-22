@@ -30,8 +30,8 @@ class User(UserBase):
 
 
 class PlayerGame(BaseModel):
-    movimientos: List[constr(max_length=5)]
-    golpes: List[constr(max_length=1)]
+    movimientos: List[constr(max_length=5, regex="^[ASWDaswd]{0,5}$")]
+    golpes: List[constr(max_length=1, regex="^[KPkp]{0,1}$")]
 
 
 class Superpower(BaseModel):
